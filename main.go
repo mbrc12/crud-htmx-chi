@@ -72,7 +72,7 @@ func main() {
 	})
 
 	// add item
-	router.Get("/add", func(w http.ResponseWriter, r *http.Request) {
+	router.Post("/add", func(w http.ResponseWriter, r *http.Request) {
 		entry := r.FormValue("entry")
 		ctx := r.Context()
 
@@ -84,7 +84,7 @@ func main() {
 	})
 
 	// delete item
-	router.Get("/delete/{id}", func(w http.ResponseWriter, r *http.Request) {
+	router.Post("/delete/{id}", func(w http.ResponseWriter, r *http.Request) {
 		id := chi.URLParam(r, "id")
 		ctx := r.Context()
 
@@ -96,7 +96,7 @@ func main() {
 	})
 
 	// edit item
-	router.Get("/edit/{id}", func(w http.ResponseWriter, r *http.Request) {
+	router.Post("/edit/{id}", func(w http.ResponseWriter, r *http.Request) {
 		id := chi.URLParam(r, "id")
 		newEntry := r.FormValue("editing")
 

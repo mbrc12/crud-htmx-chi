@@ -1,6 +1,6 @@
 {{ define "list" }}
 	{{ range . }}
-		<a class="delete" hx-get="/delete/{{.Id}}" hx-target="#list" href="javascript:;">delete</a> 
+		<a class="delete" hx-post="/delete/{{.Id}}" hx-target="#list" href="javascript:;">delete</a> 
 		<span class="entry" hx-on:click="replaceElt(this, {{.Id}})">{{ .Entry }}</span>
 	{{ end }}
 {{ end }}
@@ -29,7 +29,7 @@
 					name='editing'
 					value="${item.innerHTML}"
 
-					hx-get="/edit/${idx}"
+					hx-post="/edit/${idx}"
 					hx-target="#list"
 				>`;
 
@@ -41,7 +41,7 @@
 
 	<body hx-get="/load" hx-trigger="load once" hx-target="#list">
 		<div class="container">
-			<form method="get" hx-get="/add" hx-target="#list">
+			<form hx-post="/add" hx-target="#list">
 				<input id="input" type="text" name="entry"/>
 				<input id="submit" type="submit" value="Add"/>
 			</form>
