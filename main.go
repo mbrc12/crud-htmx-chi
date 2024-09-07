@@ -109,7 +109,9 @@ func main() {
 		}
 	})
 
-	http.ListenAndServe(PORT, router)
+	if err = http.ListenAndServe(PORT, router); err != nil {
+		log.Fatal(err)
+	}
 }
 
 // fetch data from sql and render into html into the writer
