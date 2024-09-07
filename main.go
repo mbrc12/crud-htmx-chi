@@ -25,7 +25,7 @@ type Item struct {
 }
 
 func init() {
-	godotenv.Load()
+	Assert(godotenv.Load())
 	tmpl = template.Must(template.ParseGlob("templates/*.html"))
 	log.Info("Loaded templates")
 }
@@ -41,7 +41,7 @@ func main() {
 		log.Fatal(err)
 		log.Fatalf("Failed to open db %s", DB_NAME)
 	}
-	defer db.Close()
+	defer Assert(db.Close())
 
 	router := chi.NewRouter()
 
@@ -63,12 +63,12 @@ func main() {
 	// main page
 	router.Get("/", func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Content-Type", "text/html")
-		tmpl.ExecuteTemplate(w, "index", nil)
+		Assert(tmpl.ExecuteTemplate(w, "index", nil))
 	})
 
 	// initial load
 	router.Get("/load", func(w http.ResponseWriter, r *http.Request) {
-		render(r.Context(), w)
+		Assert(render(r.Context(), w))
 	})
 
 	// add item
@@ -76,7 +76,7 @@ func main() {
 		entry := r.FormValue("entry")
 		ctx := r.Context()
 
-		db.ExecContext(ctx, "insert into items (entry) values (?)", entry)
+		Assert2(db.ExecContext(ctx, "insert into items (entry) values (?)", entry))
 
 		if err := render(ctx, w); err != nil {
 			log.Fatal(err)
@@ -88,7 +88,7 @@ func main() {
 		id := chi.URLParam(r, "id")
 		ctx := r.Context()
 
-		db.ExecContext(ctx, "delete from items where id = ?", id)
+		Assert2(db.ExecContext(ctx, "delete from items where id = ?", id))
 
 		if err := render(ctx, w); err != nil {
 			log.Fatal(err)
@@ -102,7 +102,7 @@ func main() {
 
 		ctx := r.Context()
 
-		db.ExecContext(ctx, "update items set entry = ? where id = ?", newEntry, id)
+		Assert2(db.ExecContext(ctx, "update items set entry = ? where id = ?", newEntry, id))
 
 		if err := render(ctx, w); err != nil {
 			log.Fatal(err)
@@ -125,7 +125,7 @@ func render(ctx context.Context, w http.ResponseWriter) error {
 
 	for rows.Next() {
 		var item Item
-		rows.Scan(&item.Id, &item.Entry)
+		Assert(rows.Scan(&item.Id, &item.Entry))
 		data = append(data, item)
 	}
 
@@ -137,4 +137,14 @@ type charmLogger struct{}
 
 func (self *charmLogger) Print(v ...interface{}) {
 	log.Infof("chi: %v", v)
+}
+
+func Assert(err error) {
+	if err != nil {
+		log.Fatal(err)
+	}
+}
+
+func Assert2(sth interface{}, err error) {
+	Assert(err)
 }
