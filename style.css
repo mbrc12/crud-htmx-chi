@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 body {
-	@apply p-8 bg-zinc-100 w-full lg:w-1/2 m-auto text-zinc-900;
+	@apply p-2 bg-zinc-100 w-full lg:w-1/2 m-auto text-zinc-900;
 }
 
 .container {
@@ -19,7 +19,7 @@ form {
 }
 
 #submit {
-	@apply basis-1/4 bg-zinc-400 active:bg-zinc-500 active:text-slate-900;
+	@apply basis-1/4 bg-zinc-400 active:bg-zinc-500 active:text-slate-900 rounded-none;
 }
 
 #list {

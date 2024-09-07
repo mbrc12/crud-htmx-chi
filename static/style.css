@@ -963,7 +963,7 @@ body {
   width: 100%;
   --tw-bg-opacity: 1;
   background-color: rgb(244 244 245 / var(--tw-bg-opacity));
-  padding: 2rem;
+  padding: 0.5rem;
   --tw-text-opacity: 1;
   color: rgb(24 24 27 / var(--tw-text-opacity));
 }
@@ -1007,6 +1007,7 @@ form {
 
 #submit {
   flex-basis: 25%;
+  border-radius: 0px;
   --tw-bg-opacity: 1;
   background-color: rgb(161 161 170 / var(--tw-bg-opacity));
 }
@@ -1057,6 +1058,11 @@ form {
 .active\:bg-zinc-500:active {
   --tw-bg-opacity: 1;
   background-color: rgb(113 113 122 / var(--tw-bg-opacity));
+}
+
+.active\:text-slate-900:active {
+  --tw-text-opacity: 1;
+  color: rgb(15 23 42 / var(--tw-text-opacity));
 }
 
 @media (min-width: 1024px) {
