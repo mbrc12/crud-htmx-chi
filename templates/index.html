@@ -1,0 +1,54 @@
+{{ define "list" }}
+	{{ range . }}
+		<a class="delete" hx-get="/delete/{{.Id}}" hx-target="#list" href="javascript:;">delete</a> 
+		<span class="entry" hx-on:click="replaceElt(this, {{.Id}})">{{ .Entry }}</span>
+	{{ end }}
+{{ end }}
+
+
+{{ define "index" }}
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+
+		<title> Basic test </title>
+
+		<!--css from tailwind -->
+		<link rel="stylesheet" href="/static/style.css">
+
+		<!-- htmx -->
+		<script src="https://unpkg.com/htmx.org@2.0.2" integrity="sha384-Y7hw+L/jvKeWIRRkqWYfPcvVxHzVzn5REgzbawhxAuQGwX1XWe70vji+VSeHOThJ" crossorigin="anonymous"></script>
+
+		<script>
+			function replaceElt(item, idx) {
+				let content = `<input 
+					class='entry' 
+					type='input' 
+					name='editing'
+					value="${item.innerHTML}"
+
+					hx-get="/edit/${idx}"
+					hx-target="#list"
+				>`;
+
+				htmx.swap(item, content, {swapStyle: "outerHTML"});
+			}
+		</script>
+
+	</head>
+
+	<body hx-get="/load" hx-trigger="load once" hx-target="#list">
+		<div class="container">
+			<form method="get" hx-get="/add" hx-target="#list">
+				<input id="input" type="text" name="entry"/>
+				<input id="submit" type="submit" value="Add"/>
+			</form>
+			<div id="list">
+			{{ template "list" . }}
+			</div>
+		</div>
+	</body>
+</html>
+{{ end }}

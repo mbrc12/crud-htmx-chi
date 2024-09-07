@@ -1,0 +1,35 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+	@apply p-8 bg-zinc-100 w-full lg:w-1/2 m-auto text-zinc-900;
+}
+
+.container {
+	@apply flex flex-col p-4 gap-5 w-full;
+}
+
+form {
+	@apply flex flex-row grow gap-2 w-full;
+}
+
+#input {
+	@apply basis-3/4 rounded-none p-2 text-zinc-300 bg-zinc-500 focus:bg-zinc-900;	
+}
+
+#submit {
+	@apply basis-1/4 bg-zinc-400 active:bg-zinc-500 active:text-slate-900;
+}
+
+#list {
+	@apply grid grid-cols-10 gap-y-4 gap-x-3 w-full;
+}
+
+.entry {
+	@apply col-span-8 text-left hover:bg-zinc-200 p-2;
+}
+
+.delete {
+	@apply col-span-2 text-slate-900 bg-pink-500 flex p-2 justify-center;
+}
